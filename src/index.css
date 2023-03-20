@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+ 
+  scrollbar-color: rgb(0, 48, 20) rgb(0, 14, 7);
+}
+
+body {
+  background: linear-gradient(0deg, rgb(0, 14, 7), rgb(4, 0, 24));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  
+}
+
+
+h1 {
+  color: #fff;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+
+/* form */
+
+form {
+ 
+  border-top: 1px solid rgb(0, 87, 36);
+  border-bottom: 1px solid rgb(0, 87, 36);
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px 0;
+ 
+  
+}
+
+.form-fields {
+
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px 0;
+  gap: 5px;
+ 
+
+}
+
+form label {
+  color: rgb(0, 209, 87);
+  font-size: 1.5rem;
+  text-align: right;
+  width: 100px;
+ 
+}
+
+form input, textarea, form select {
+  padding: 3px;
+  font-size: 1.15rem;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  
+}
+
+form input:focus, textarea:focus {
+  background: rgb(196, 255, 220);
+}
+
+.select {
+  justify-content: flex-start;
+  gap: 26px;
+  
+}
+
+.password {
+  justify-content: flex-start;
+  gap: 23px;
+}
+
+
+/* button */
+
+.btn {
+  display: block;
+  margin: 0 auto;
+  background: none;
+  border: 1px solid rgb(0, 209, 87);
+  border-radius: 4px;
+  padding: 10px 20px;
+  color:rgb(0, 87, 36);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: ease-out color 500ms;
+  
+}
+
+.btn:hover {
+  color:rgb(0, 209, 87);
+}
+
+/* messages */
+
+.error {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 3px;
+  color: rgb(204, 0, 0);
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0 3px;
+  color: rgb(0, 209, 87);
+}
+
+
+/* blog page */
+
+.post-card {
+  width: 100%;
+  border-width: 3px;
+  border-style: solid;
+  border-image: 
+    linear-gradient(
+      to top, 
+      rgba(0, 87, 36, 0.089), 
+      rgb(0, 87, 36)
+    ) 1 100%;
+  /* border: 2px solid rgb(0, 87, 36);
+  border-radius: 8px; */
+  padding: 10px;
+  margin-bottom: 20px;
+  /* display: flex;
+  align-items: center; */
+  overflow-wrap: break-word;
+  
+}
+
+
+.post-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+.post-card h2 {
+ font-size: 2rem;
+ padding-bottom: 10px;
+ color: rgb(0, 209, 87);
+ 
+}
+
+.post-card p {
+  font-size: 1.15rem;
+  color: #fff;
+  line-height: 1.5rem;
+  
+}
+
+
+/* single post page */
+
+.post-image {
+  height: 400px;
+  overflow: hidden;
+
+}
+
+.single-post img {
+  width: 100%;
+}
+
+.single-post h1 {
+  font-size: 3rem;
+  margin: 20px 0;
+  padding-bottom: 13px;
+ 
+  border-bottom: 1px solid rgb(0, 87, 36);
+  
+}
+
+.post-details {
+  color:rgb(0, 87, 36);
+}
+
+.post-body {
+  margin: 20px 0;
+  padding-bottom: 20px;
+  color: #fff;
+  font-size: 1.2rem;
+  border-bottom: 1px solid rgb(0, 87, 36);
+  overflow-wrap: break-word;
+  line-height: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+/* navbar */
+
+nav {
+  height:60px;
+  padding: 10px 0;
+  display: flex;
+  background: rgb(4, 0, 24);
+  box-shadow:1px 0px 6px 1px gray;
+  justify-content:space-around;
+  align-items: center;
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 999;
+  transition: ease-out 500ms;
+}
+
+.navslideUp {
+  transform: translateY(-70px);
+}
+
+nav .logo {
+  color: rgb(0, 209, 87);
+  font-size: 2rem;
+ 
+}
+
+span {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.nav-links ul {
+  list-style-type: none;
+}
+
+.nav-links ul li {
+  display: inline-block;
+  margin-right: 20px;
+ 
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links ul a {
+  color:rgb(0, 209, 87);
+  transition: ease-out color 200ms;
+}
+
+.nav-links ul a:hover {
+  
+  color:rgb(0, 87, 36);
+  cursor: pointer;
+}
+
+li.auth {
+  font-size: 0.80rem;
+  position: relative;
+  left: 50px;
+  
+}
+
+li.auth i {
+  margin-right: 4px;
+}
+
+/* footer */
+
+footer {
+  padding: 40px;
+  text-align: center;
+}
+
+footer .copyright {
+        color: #fff;
+        font-size: 0.75rem;
+        display: inline-block;
+        padding: 20px;
+        border-top: 1px solid #ddd;
+}
+
+
+
+
+/* badge */
+
+.badge {
+  background:rgb(0, 48, 20);
+  display: inline-block;
+  margin: 0 4px 4px 0;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  color: #fff;
+  border-radius: 10px;
+  
+}
+
+
+/* media queries */
+
+
+@media (max-width: 700px) {
+  .post-card {
+    display: block;
+    
+  }
+
+  .post-card p {
+    font-size: 1rem;
+  }
+
+  .post-card img {
+    max-height: 200px;
+    
+    
+  }
+
+  .post-image {
+    height: 100%;
+    
+  }
+
+  .single-post h1 {
+    font-size: 2rem;
+  }
+
+  .post-body {
+    font-size: 1rem;
+  }
+
+ 
+}
