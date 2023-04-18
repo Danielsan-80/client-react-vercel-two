@@ -8,6 +8,7 @@ const AuthForm = () => {
 
   const navigate = useNavigate()
     const currLoc =  useLocation()
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const {signup, login, error, isLoading} = useSignupLogin()
@@ -15,20 +16,27 @@ const AuthForm = () => {
       const handleSubmit = async (e)=> {
           e.preventDefault();
           if(currLoc.pathname === '/signup') {
-          await signup(email, password)
-          navigate('/blog')
+          await signup(name, email, password)
+          navigate('/dashboard')
           
       }
 
       if(currLoc.pathname === '/login') {
         await login(email, password)
-        navigate('/blog')
+       
+        navigate('/dashboard')
         
       }
     }
 
   return (
     <form onSubmit={handleSubmit}>
+  
+    <div className="form-fields">
+        <label>Name:</label>
+        <input type="text" name="name"  onChange={(e)=>setName(e.target.value)} value={name}/>
+        </div>
+
     <div className="form-fields">
         <label>Email:</label>
         <input type="email" name="email"  onChange={(e)=>setEmail(e.target.value)} value={email}/>
@@ -38,9 +46,10 @@ const AuthForm = () => {
         <label>Password:</label>
         <input type="password" name="password"  onChange={(e)=>setPassword(e.target.value)} value={password}/>
         </div>
+        {error && <div className="error">{error}</div>}
 
         <Button text="Submit"/>
-        {error && <div className="error">{error}</div>}
+        
     </form>
   )
 }

@@ -10,6 +10,7 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
   const [title, setTitle] = useState(originalPost.title)
   const [body, setBody] = useState(originalPost.body)
   const [category, setCategory] = useState( originalPost.category)
+  const [tags, setTags] = useState( originalPost.tags.join(', '))
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
@@ -18,11 +19,12 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
   const handleUpdate = async (e)=>{
     e.preventDefault()
 
+    const postTags = tags.split(',')
     const post = {
-      title, body, category
+      title, body, category, tags:postTags
     }
 
-    const res = await updatePost(id, post)
+    const res = await updatePost(originalPost._id, post)
     const json = await res.json()
 
     if(!res.ok) {
@@ -66,6 +68,11 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
           <option value="art">Art</option>
           <option value="literature">Literature</option>
         </select>
+        </div>
+        <div className="form-fields">
+        <label>Tags :</label>
+        <input name="tags" onChange={(e)=>setTags(e.target.value)} value={tags}>
+        </input>
         </div>
         {error && <div className="error">{error}</div>}
         {message && <div className="message">{message}</div>}

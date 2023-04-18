@@ -13,15 +13,15 @@ export async function getPost(id){
     return post
 }
 
-export async function createPost(post, token){
+export async function createPost(post, user){
    
-    const res = await fetch('api/posts', {
+    const res = await fetch('/api/posts', {
         method: 'POST',
-        body: JSON.stringify(post),
         headers: {
           'Content-Type':'application/json',
-          'Authorization':'Bearer '+token
-        }
+          'Authorization':'Bearer '+ user.token
+        },
+        body: JSON.stringify({email:user.email, title:post.title, body:post.body, category:post.category, tags: post.tags})
       })
   
       return res
@@ -29,11 +29,11 @@ export async function createPost(post, token){
 
 export async function updatePost(id, post){
     const res = await fetch('/api/posts/'+id, {
-        method: 'PATCH',
-        body: JSON.stringify(post),
+        method: 'PUT',
         headers: {
           'Content-Type':'application/json'
-        }
+        }, 
+        body: JSON.stringify({title:post.title, body:post.body, category:post.category, tags: post.tags})
       })
 
       return res

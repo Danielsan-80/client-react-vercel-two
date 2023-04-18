@@ -12,6 +12,7 @@ const Form = () => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [category, setCategory] = useState( 'fashion')
+  const [tags, setTags] = useState('')
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
@@ -20,13 +21,15 @@ const Form = () => {
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
-
+    const postTags = tags.split(',');
     const post = {
-      title, body, category
+      title, body, category, tags:postTags
     }
 
-    const res = await createPost(post, user.token);
+    const res = await createPost(post, user);
+    
     const json = await res.json()
+    
 
     if(!res.ok) {
       setError(json.error)
@@ -39,6 +42,7 @@ const Form = () => {
       setTitle('')
       setBody('')
       setCategory('fashion')
+      setTags('')
       setError(null)
       setEmptyFields([])
       setMessage(json.message)
@@ -71,6 +75,11 @@ const Form = () => {
           <option value="art">Art</option>
           <option value="literature">Literature</option>
         </select>
+        </div>
+        <div className="form-fields">
+        <label>Tags :</label>
+        <input name="tags" onChange={(e)=>setTags(e.target.value)} value={tags}>
+        </input>
         </div>
         {error && <div className="error">{error}</div>}
         {message && <div className="message">{message}</div>}
