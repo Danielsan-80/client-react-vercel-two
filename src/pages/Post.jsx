@@ -15,9 +15,8 @@ const Post = () => {
 
     const {id} = useParams()
     const [post, setPost] = useState({})
-    const [isUpdating, setIsUpdating] = useState(false)
-    const [message, setMessage] = useState(null)
-
+  
+    
     useEffect(()=>{
         const fetchPost = async ()=>{
             const post = await getPost(id)
@@ -26,25 +25,9 @@ const Post = () => {
         fetchPost()
     },[])
 
-    const cancelUpdate= ()=> {
-      setIsUpdating(false)
-    }
-
-    const handleDelete = async () =>{
-     
-      const json = await deletePost(id)
-
-      setMessage(json.message)
-      setTimeout(()=>{
-        navigate('/blog')
-    }, 3000)
-
-    }
-
   return (
     <div className={styles.container}>
-    {isUpdating ? <UpdateForm cancelUpdate={cancelUpdate} id={id} originalPost={post}/> :
-
+   
     <div className="single-post">
         <div className="post-image">
         <img src="//unsplash.it/730/380" alt=""/>
@@ -56,18 +39,8 @@ const Post = () => {
         </div>
         <p className="post-body">{post.body}</p>
 
-        <div className="buttons">
-        <div className="btn" onClick={()=>setIsUpdating(true)}>Update</div>
-       
-        <div className="btn" onClick={handleDelete}>Delete</div>
-
-        </div>
-
     </div>
-
-  }
-  {message && <p className="message">{message}</p>}
-
+  
     </div>
   )
 }

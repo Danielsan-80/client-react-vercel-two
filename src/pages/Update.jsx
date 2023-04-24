@@ -9,10 +9,6 @@ import {useAuthContext} from '../hooks/useAuthContext'
 const Update = () => {
 
   const {user} = useAuthContext()
-  if(!user){
-    return <Navigate to="/login" replace />
-  }
-
   const {id} = useParams()
   const [originalPost, setOriginalPost] = useState({})
 
@@ -20,6 +16,7 @@ const Update = () => {
     const fetchPost = async ()=>{
         const post = await getPost(id)
         setOriginalPost(post)
+        
     }
     fetchPost()
   },[])

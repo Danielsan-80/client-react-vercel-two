@@ -3,14 +3,14 @@ import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { updatePost } from '../controllers/postController'
 
-const UpdateForm = ({id, cancelUpdate, originalPost}) => {
+const UpdateForm = ({originalPost}) => {
 
   const navigate = useNavigate()
 
   const [title, setTitle] = useState(originalPost.title)
   const [body, setBody] = useState(originalPost.body)
-  const [category, setCategory] = useState( originalPost.category)
-  const [tags, setTags] = useState( originalPost.tags.join(', '))
+  const [category, setCategory] = useState(originalPost.category)
+  const [tags, setTags] = useState( originalPost.tags)
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
@@ -19,9 +19,10 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
   const handleUpdate = async (e)=>{
     e.preventDefault()
 
-    const postTags = tags.split(',')
+    
+    
     const post = {
-      title, body, category, tags:postTags
+      title, body, category, tags
     }
 
     const res = await updatePost(originalPost._id, post)
@@ -63,6 +64,7 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
         <div className="form-fields select">
         <label>Category:</label>
         <select name="category" onChange={(e)=>setCategory(e.target.value)} defaultValue={originalPost.category}>
+          <option selected="selected">{originalPost.category}</option>
           <option value="travel">Travel</option>
           <option value="fashion">Fashion</option>
           <option value="art">Art</option>
@@ -71,7 +73,7 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
         </div>
         <div className="form-fields">
         <label>Tags :</label>
-        <input name="tags" onChange={(e)=>setTags(e.target.value)} value={tags}>
+        <input name="tags" onChange={(e)=>setTags(e.target.value)} defaultValue={originalPost.tags}>
         </input>
         </div>
         {error && <div className="error">{error}</div>}
@@ -81,7 +83,7 @@ const UpdateForm = ({id, cancelUpdate, originalPost}) => {
        
     </form>
 
-    <div className="btn" style={{display: 'inline-block', marginTop: '20px'}} onClick={cancelUpdate}>&larr; Go Back</div>
+    <div className="btn" style={{display: 'inline-block', marginTop: '20px'}}>&larr; Go Back</div>
   
     </>
   )

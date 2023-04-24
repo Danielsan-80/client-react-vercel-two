@@ -1,17 +1,22 @@
-//import styles from '../modules/dashboard.module.css'
+import styles from '../modules/dashboard.module.css'
 import {Link} from 'react-router-dom'
 import {useAuthContext} from '../hooks/useAuthContext'
-import {getPosts} from '../controllers/postController'
+import {getPosts, deletePost} from '../controllers/postController'
 import {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
 import Loading from '../components/Loading'
 
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+ 
   const {user} = useAuthContext()
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  
   const filteredPosts = posts.filter(post=>
     post.author.name===user.name)
+  
   
   useEffect(()=>{
     const fetchPosts = async ()=>{
@@ -26,20 +31,25 @@ const Dashboard = () => {
   }, [posts])
 
 
-  const handleDelete = async(id)=>{
-    await fetch('/api/posts/'+id, {
-      method: 'DELETE'
-    })
+  const handleDelete = async (id) =>{
+     
+    const json = await deletePost(id)
+
+    setMessage(json.message)
+    setTimeout(()=>{
+      navigate('/blog')
+  }, 3000)
+
   }
 
   return (
-    <div style={{color:"white"}}>
-    <h1> Dashboard</h1>
+ 
+    <div style={{color:"white"}} className={styles.container}>
+    <h1>Dashboard</h1>
 
-    
     {filteredPosts.length != 0 ?  
     <table>
-      <thead>
+      <thead className={styles.tableHead}>
     <tr>
       <th>Title</th>
       <th>Description</th>
@@ -55,14 +65,14 @@ const Dashboard = () => {
         <td>       
         
         <Link to={'/update/'+post._id}>
-            <button>
+            <button className='btn'>
             Update
             </button>
           </Link>
             
         </td>
         <td>
-          <button onClick={()=>handleDelete(post._id)}>Delete</button>
+          <button onClick={()=>handleDelete(post._id)}className='btn'>Delete</button>
         </td>
       </tr>
       ))}
@@ -81,9 +91,10 @@ const Dashboard = () => {
       }
   </div>
     }
-
     <Link to="/create">
-      Add new Post
+    <button className='btn'>
+            Add New
+    </button>
     </Link>
     </div>
   )
