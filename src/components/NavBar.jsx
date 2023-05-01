@@ -60,7 +60,10 @@ const NavBar = () => {
         )}
        
         {user && (
+          <>
+           <li className='auth'><Link to='/dashboard'><i className="fa-solid fa-user" aria-hidden="true"></i>{user.name}</Link></li>
           <li className='auth' onClick={handleLogout}><a><i className="fa-solid fa-sign-out" aria-hidden="true"></i>Logout</a></li>
+          </>
         )}
        
         </ul>

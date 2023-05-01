@@ -24,10 +24,11 @@ const Dashboard = () => {
       const posts = await getPosts()
      
     setPosts(posts)
+    setLoading(false);
   }
 
   fetchPosts()
-  setLoading(false);
+  
   }, [posts])
 
 
@@ -44,12 +45,12 @@ const Dashboard = () => {
 
   return (
  
-    <div style={{color:"white"}} className={styles.container}>
-    <h1>Dashboard</h1>
+    <div className={styles.container}>
+    <h1>{user.name}'s Dashboard</h1>
 
-    {filteredPosts.length != 0 ?  
-    <table>
-      <thead className={styles.tableHead}>
+    {filteredPosts.length !== 0 ?  
+    <table className='dashboardTable'>
+      <thead>
     <tr>
       <th>Title</th>
       <th>Description</th>
@@ -59,20 +60,21 @@ const Dashboard = () => {
     <tbody >
       {filteredPosts.map(post=>(
         <tr key={post._id}>
-        <td>{post.title} - {post.author.name}</td>
+        <td className='dashboard-post-title'><Link to={'/posts/'+post._id}>{post.title}</Link>
+        </td>
         <td>{post.body.substring(0,20)+'...'}</td>
         <td>{Intl.DateTimeFormat("it-IT", {weekday: "long", month: "short", year: "numeric", day: "numeric"}).format(new Date(post.updatedAt))}</td>
         <td>       
         
         <Link to={'/update/'+post._id}>
             <button className='btn'>
-            Update
+            <i className='fa fa-pen'></i>
             </button>
           </Link>
             
         </td>
         <td>
-          <button onClick={()=>handleDelete(post._id)}className='btn'>Delete</button>
+          <button onClick={()=>handleDelete(post._id)}className='btn'><i className='fa fa-trash'></i></button>
         </td>
       </tr>
       ))}
@@ -80,7 +82,6 @@ const Dashboard = () => {
     </table>
     
     :
-
     <div>
     {loading ? <Loading />
     : 
@@ -91,8 +92,9 @@ const Dashboard = () => {
       }
   </div>
     }
+    
     <Link to="/create">
-    <button className='btn'>
+    <button className='btn btn-create'>
             Add New
     </button>
     </Link>

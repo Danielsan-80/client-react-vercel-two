@@ -203,6 +203,51 @@ form input:focus, textarea:focus {
   justify-content: space-between;
 }
 
+/* dashboard */
+.dashboardTable {
+  border-collapse: collapse;
+  color: white;
+  font-size: 0.90rem;
+  text-align: center;
+  width: 100%;
+}
+
+.dashboardTable>thead {
+  background: rgb(0, 87, 36);
+  font-size: 1.15rem;
+  
+}
+
+th {
+  padding: 5px;
+}
+
+.dashboardTable td {
+  padding: 5px;
+  border-bottom: 1px solid rgb(0, 87, 36);
+}
+
+.dashboard-post-title {
+  transition: color ease-in-out 500ms;
+  color: rgb(0, 87, 36)
+}
+
+.dashboard-post-title:hover {
+  cursor: pointer;
+  color: rgb(0, 209, 87);
+}
+
+.dashboardTable .btn {
+  font-size: 0.70rem;
+}
+
+.btn-create {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
 
 /* navbar */
 
