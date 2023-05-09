@@ -1,5 +1,5 @@
 import Button from './Button'
-import {useState, useRef} from 'react'
+import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { updatePost } from '../controllers/postController'
 import {Editor} from '@tinymce/tinymce-react'
@@ -9,19 +9,19 @@ const UpdateForm = ({originalPost}) => {
   const navigate = useNavigate()
 
   const [title, setTitle] = useState(originalPost.title)
-  const [body, setBody] = useState(originalPost.body)
+  const [body, setBody] = useState(null)
   const [category, setCategory] = useState(originalPost.category)
   const [tags, setTags] = useState( originalPost.tags)
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
-  const editorRef = useRef(null);
+  
 
   const handleUpdate = async (e)=>{
     e.preventDefault()
     
     const post = {
-      title, body: editorRef.current.getContent(), category, tags
+      title, body, category, tags
     }
 
     const res = await updatePost(originalPost._id, post)
@@ -59,9 +59,8 @@ const UpdateForm = ({originalPost}) => {
         <label>Body:</label>
 
         <Editor
-         onInit={(evt, editor) => editorRef.current = editor}
-        // onChange={()=>setBody(content)}
-        
+        //  onInit={(evt, editor) => editorRef.current = editor}
+        onChange={(evt, editor)=>setBody(editor.getContent())}
          initialValue={originalPost.body}
          init={{
            height: 500,
@@ -79,9 +78,6 @@ const UpdateForm = ({originalPost}) => {
          }}
        />
 
-
-        {/* <textarea name="body" cols="18" onChange={(e)=>setBody(e.target.value)} defaultValue={originalPost.body}>
-        </textarea> */}
         </div>
         <div className="form-fields select">
         <label>Category:</label>

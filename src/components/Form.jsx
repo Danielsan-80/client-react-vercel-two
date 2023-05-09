@@ -1,5 +1,5 @@
 import Button from './Button'
-import {useState, useEffect, useRef} from 'react'
+import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { createPost } from '../controllers/postController'
 import {useAuthContext} from '../hooks/useAuthContext'
@@ -10,21 +10,21 @@ const Form = () => {
   
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
+  const [body, setBody] = useState(null)
   const [category, setCategory] = useState( 'fashion')
   const [tags, setTags] = useState('')
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
   const {user} = useAuthContext()
-  const editorRef = useRef(null);
+  
   
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
     const postTags = tags.split(',');
     const post = {
-      title, body: editorRef.current.getContent(), category, tags:postTags
+      title, body, category, tags:postTags
     }
    
     const res = await createPost(post, user);
@@ -67,8 +67,11 @@ const Form = () => {
         <label>Body:</label>
        
         <Editor
-         onInit={(evt, editor) => editorRef.current = editor}
-         initialValue="<p>This is the initial content of the editor.</p>"
+        //  onInit={(evt, editor) => editorRef.current = editor}
+        onChange={(evt, editor)=>{
+          setBody(editor.getContent())
+        }}
+         initialValue="<p>Write your content here.</p>"
          init={{
            height: 500,
            menubar: true,
