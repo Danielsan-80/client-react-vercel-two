@@ -175,20 +175,21 @@ form input:focus, textarea:focus {
   width: 100%;
 }
 
-.single-post h1 {
+.single-post>h1 {
   font-size: 3rem;
   margin: 20px 0;
   padding-bottom: 13px;
- 
   border-bottom: 1px solid rgb(0, 87, 36);
+  
   
 }
 
 .post-details {
   color:rgb(0, 87, 36);
+  margin-bottom: 10px;
 }
 
-.post-body {
+.post-body  {
   margin: 20px 0;
   padding-bottom: 20px;
   color: #fff;
@@ -196,6 +197,12 @@ form input:focus, textarea:focus {
   border-bottom: 1px solid rgb(0, 87, 36);
   overflow-wrap: break-word;
   line-height: 1.5rem;
+}
+
+
+span p {
+  font-size: 1rem;
+  font-weight: lighter;
 }
 
 .buttons {

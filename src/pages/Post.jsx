@@ -1,17 +1,13 @@
-import {useParams, useNavigate} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import Badge from '../components/Badge'
-import UpdateForm from '../components/UpdateForm'
-import {getPost, deletePost} from '../controllers/postController'
+import {getPost} from '../controllers/postController'
 import styles from '../modules/post.module.css'
 
 
 
 
 const Post = () => {
-
-    const navigate = useNavigate()
-    
 
     const {id} = useParams()
     const [post, setPost] = useState({})
@@ -23,7 +19,10 @@ const Post = () => {
             setPost(post)
         }
         fetchPost()
+        
     },[])
+
+    
 
   return (
     <div className={styles.container}>
@@ -37,10 +36,11 @@ const Post = () => {
         Category: <Badge content={post.category} />
         Published: <Badge content={new Date(post.createdAt).toLocaleDateString()}/>
         </div>
-        <p className="post-body">{post.body}</p>
+        <span dangerouslySetInnerHTML={{ __html: post.body}} />
+        <div className="post-body"></div>
 
     </div>
-  
+    
     </div>
   )
 }

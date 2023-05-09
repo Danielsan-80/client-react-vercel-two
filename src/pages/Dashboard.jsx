@@ -9,9 +9,9 @@ import Loading from '../components/Loading'
 
 const Dashboard = () => {
   const navigate = useNavigate();
- 
   const {user} = useAuthContext()
   const [posts, setPosts] = useState([])
+  const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
   
   const filteredPosts = posts.filter(post=>
@@ -98,6 +98,7 @@ const Dashboard = () => {
             Add New
     </button>
     </Link>
+    {message && <p>{message}</p>}
     </div>
   )
 }

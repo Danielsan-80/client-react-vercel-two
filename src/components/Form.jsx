@@ -1,14 +1,14 @@
 import Button from './Button'
-import {useState} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { createPost } from '../controllers/postController'
 import {useAuthContext} from '../hooks/useAuthContext'
+import { Editor } from '@tinymce/tinymce-react'
 
 
 const Form = () => {
-
+  
   const navigate = useNavigate()
-
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [category, setCategory] = useState( 'fashion')
@@ -17,15 +17,16 @@ const Form = () => {
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
   const {user} = useAuthContext()
-
+  const editorRef = useRef(null);
+  
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
     const postTags = tags.split(',');
     const post = {
-      title, body, category, tags:postTags
+      title, body: editorRef.current.getContent(), category, tags:postTags
     }
-
+   
     const res = await createPost(post, user);
     
     const json = await res.json()
@@ -64,8 +65,25 @@ const Form = () => {
         </div>
         <div className="form-fields">
         <label>Body:</label>
-        <textarea name="body" cols="18" onChange={(e)=>setBody(e.target.value)} value={body}>
-        </textarea>
+       
+        <Editor
+         onInit={(evt, editor) => editorRef.current = editor}
+         initialValue="<p>This is the initial content of the editor.</p>"
+         init={{
+           height: 500,
+           menubar: true,
+           plugins: [
+             'advlist autolink lists link image charmap print preview anchor',
+             'searchreplace visualblocks code fullscreen',
+             'insertdatetime media table paste code help wordcount'
+           ],
+           toolbar: 'undo redo | formatselect | ' +
+           'bold italic backcolor | alignleft aligncenter ' +
+           'alignright alignjustify | bullist numlist outdent indent | ' +
+           'removeformat | help',
+           content_style: 'body { font-family:Montserrat, sans-serif; font-size:16px }'
+         }}
+       />
         </div>
         <div className="form-fields select">
         <label>Category:</label>
