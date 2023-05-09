@@ -1,7 +1,8 @@
 import Button from './Button'
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { updatePost } from '../controllers/postController'
+import {Editor} from '@tinymce/tinymce-react'
 
 const UpdateForm = ({originalPost}) => {
 
@@ -14,15 +15,13 @@ const UpdateForm = ({originalPost}) => {
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
-
+  const editorRef = useRef(null);
 
   const handleUpdate = async (e)=>{
     e.preventDefault()
-
-    
     
     const post = {
-      title, body, category, tags
+      title, body: editorRef.current.getContent(), category, tags
     }
 
     const res = await updatePost(originalPost._id, post)
@@ -58,8 +57,31 @@ const UpdateForm = ({originalPost}) => {
         </div>
         <div className="form-fields">
         <label>Body:</label>
-        <textarea name="body" cols="18" onChange={(e)=>setBody(e.target.value)} defaultValue={originalPost.body}>
-        </textarea>
+
+        <Editor
+         onInit={(evt, editor) => editorRef.current = editor}
+        // onChange={()=>setBody(content)}
+        
+         initialValue={originalPost.body}
+         init={{
+           height: 500,
+           menubar: true,
+           plugins: [
+             'advlist autolink lists link image charmap print preview anchor',
+             'searchreplace visualblocks code fullscreen',
+             'insertdatetime media table paste code help wordcount'
+           ],
+           toolbar: 'undo redo | formatselect | ' +
+           'bold italic backcolor | alignleft aligncenter ' +
+           'alignright alignjustify | bullist numlist outdent indent | ' +
+           'removeformat | help',
+           content_style: 'body { font-family:Montserrat, sans-serif; font-size:16px }'
+         }}
+       />
+
+
+        {/* <textarea name="body" cols="18" onChange={(e)=>setBody(e.target.value)} defaultValue={originalPost.body}>
+        </textarea> */}
         </div>
         <div className="form-fields select">
         <label>Category:</label>
