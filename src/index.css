@@ -111,6 +111,7 @@ form input:focus, textarea:focus {
 
 .message {
   text-align: center;
+  margin-top:20px;
   margin-bottom: 20px;
   padding: 0 3px;
   color: rgb(0, 209, 87);

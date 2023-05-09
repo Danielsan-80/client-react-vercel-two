@@ -98,7 +98,7 @@ const Dashboard = () => {
             Add New
     </button>
     </Link>
-    {message && <p>{message}</p>}
+    {message && <p className='message'>{message}</p>}
     </div>
   )
 }
