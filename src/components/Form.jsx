@@ -11,7 +11,8 @@ const Form = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [body, setBody] = useState(null)
-  const [category, setCategory] = useState( 'fashion')
+  const [file, setFile] = useState(null)
+  const [category, setCategory] = useState('fashion')
   const [tags, setTags] = useState('')
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
@@ -23,14 +24,22 @@ const Form = () => {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     const postTags = tags.split(',');
-    const post = {
-      title, body, category, tags:postTags
-    }
-   
-    const res = await createPost(post, user);
+    // const post = {
+    //   title, body, category, file, tags:postTags
+    // }
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('body', body)
+    formData.append('featuredImg', file)
+    formData.append('category', category)
+    formData.append('tags', postTags)
+    formData.append('email', user.email)
+    formData.append('token', user.token)
+
+    const res = await createPost(formData);
     
     const json = await res.json()
-    
+  
 
     if(!res.ok) {
       setError(json.error)
@@ -58,7 +67,7 @@ const Form = () => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
         <div className="form-fields">
         <label>Title:</label>
         <input type="text" name="title"  onChange={(e)=>setTitle(e.target.value)} value={title}/>
@@ -87,6 +96,10 @@ const Form = () => {
            content_style: 'body { font-family:Montserrat, sans-serif; font-size:16px }'
          }}
        />
+        </div>
+        <label>Image:</label>
+        <div className="form-fields">
+        <input type="file" onChange={(e)=>setFile(e.target.files[0])} name="featured_img"></input>
         </div>
         <div className="form-fields select">
         <label>Category:</label>

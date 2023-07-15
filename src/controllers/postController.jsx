@@ -13,18 +13,29 @@ export async function getPost(id){
     return post
 }
 
-export async function createPost(post, user){
-   
-    const res = await fetch('/api/posts', {
+export async function createPost(formData){
+  
+    const res = await fetch('api/posts', {
         method: 'POST',
         headers: {
-          'Content-Type':'application/json',
-          'Authorization':'Bearer '+ user.token
+          'Authorization':'Bearer '+ formData.get('token')
         },
-        body: JSON.stringify({email:user.email, title:post.title, body:post.body, category:post.category, tags: post.tags})
+        body: formData
+        
+        // JSON.stringify({
+        //   email: user.email,
+        //   title: formData.get('title'), 
+        //   body: formData.get('body'),
+        //   category: formData.get('category'),
+        //   tags: formData.get('tags')
+        // })
+        
+        //JSON.stringify
+        // ({email:user.email, title:post.title, body:post.body, category:post.category, tags: post.tags})
       })
   
-      return res
+     return res
+     
 }
 
 export async function updatePost(id, post){
