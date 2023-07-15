@@ -30,7 +30,7 @@ const Post = () => {
             setFeaturedImg(post.featuredImg)
         }
         fetchPost()
-        console.log(post.featuredImg)
+        
     },[])
 
     
