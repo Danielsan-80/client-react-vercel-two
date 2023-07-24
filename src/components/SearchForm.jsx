@@ -1,7 +1,6 @@
 import {useState} from 'react'
-import Button from './Button'
 import {FaSearch} from 'react-icons/fa'
-
+import { searchPost } from '../controllers/postController'
 
 
 const SearchForm = () => {
@@ -9,7 +8,8 @@ const SearchForm = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const handleSearch = async (e)=>{
         e.preventDefault()
-        console.log(searchTerm)
+        const posts = await searchPost(searchTerm)
+        console.log(posts)
     }
 
   return (
