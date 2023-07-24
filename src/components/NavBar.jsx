@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import {useLogout} from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext';
 import {useNavigate} from 'react-router-dom'
-
+import SearchForm from './SearchForm';
 
 
 const NavBar = () => {
@@ -51,6 +51,7 @@ const NavBar = () => {
         <ul>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/blog'>Blog</Link></li>
+        
 
         {!user && (
           <>
@@ -66,9 +67,14 @@ const NavBar = () => {
           </>
         )}
        
+      
+        
         </ul>
+        
     </div>
-
+        <div>
+        <SearchForm /> 
+        </div>
    </nav>
   
   )
