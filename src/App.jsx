@@ -1,5 +1,6 @@
 import { useAuthContext } from './hooks/useAuthContext'
 import Blog from './pages/Blog'
+import Search from './pages/Search'
 import Create from './pages/Create'
 import Update from './pages/Update'
 import Landing from './pages/Landing'
@@ -20,6 +21,7 @@ function App() {
       
         <Route path="/" element={<Landing />} />
         <Route path="/blog" exact element={<Blog />} />
+        <Route path="/search" exact element={<Search />} />
         <Route path="/create" exact element={user?<Create />:<Navigate to="/login" replace />} /> 
         <Route path="/signup" exact element={!user?<Signup />: <Navigate to="/dashboard" replace />} /> 
         <Route path="/login" exact element={!user?<Login />: <Navigate to="/dashboard" replace />} />

@@ -1,23 +1,25 @@
 import {useState, useEffect} from 'react'
+import { useLocation } from 'react-router-dom'
 import PostCard from '../components/PostCard'
-import {getPosts} from '../controllers/postController'
 import styles from '../modules/blog.module.css'
 
-const Blog = () => {
+const Search = () => {
+  const location = useLocation()
 
   const [posts, setPosts] = useState([])
 
 useEffect(()=>{
     
   
-    const fetchPosts = async ()=>{
+    const fetchPosts = ()=>{
       
-      const posts = await getPosts()
+      const posts = location?.state
       setPosts(posts)
+      window.history.replaceState({}, document.title)
   }
 
   fetchPosts()
-}, [])
+}, [location?.state])
 
   return (
     <div className={styles.container}>
@@ -37,4 +39,4 @@ useEffect(()=>{
   )
 }
 
-export default Blog
+export default Search
