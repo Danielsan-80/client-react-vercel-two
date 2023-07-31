@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {FaSearch} from 'react-icons/fa'
-import { searchPost } from '../controllers/postController'
+
 import { useNavigate } from 'react-router-dom'
 
 
@@ -10,10 +10,10 @@ const SearchForm = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const handleSearch = async (e)=>{
         
-        e.preventDefault()
-        const posts = await searchPost(searchTerm)
-        e.target.reset()
-        navigate('/search', {state: posts})
+      e.preventDefault()
+        
+      e.target.reset()
+      navigate('/search?term='+searchTerm)
         
     }
 

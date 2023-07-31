@@ -60,7 +60,7 @@ export async function deletePost(id){
       return json
 }
 
-export async function searchPost(searchTerm) {
+export async function searchPosts(searchTerm) {
   const res = await fetch('/api/posts/search', {
     method: 'POST',
     headers: {
@@ -69,7 +69,6 @@ export async function searchPost(searchTerm) {
     body: JSON.stringify({searchTerm: searchTerm})
   })
 
-  const json = await res.json()
-  return json
+  return res
 }
 

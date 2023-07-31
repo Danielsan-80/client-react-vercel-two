@@ -1,39 +1,44 @@
 import {useState, useEffect} from 'react'
-import { useLocation } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import PostCard from '../components/PostCard'
 import styles from '../modules/blog.module.css'
+import { searchPosts } from '../controllers/postController'
 
 const Search = () => {
-  const location = useLocation()
+  const [searchParams] = useSearchParams()  
+  const [posts, setPosts] = useState(null)
+  const [error, setError] = useState(null)
 
-  const [posts, setPosts] = useState([])
-
-useEffect(()=>{
-    
+  useEffect(()=>{
+    const getSearchPosts = async ()=> {
+      const res = await searchPosts(searchParams.get('term'))
   
-    const fetchPosts = ()=>{
-      
-      const posts = location?.state
+      if(!res.ok){
+        const error = await res.json()
+        setPosts(null)
+        setError(error)
+        return
+     
+      } else {
+    
+      const posts = await res.json()
       setPosts(posts)
-      window.history.replaceState({}, document.title)
-  }
-
-  fetchPosts()
-}, [location?.state])
+      setError(null)}
+    }
+  
+    getSearchPosts()
+    
+  }, [searchParams])
 
   return (
     <div className={styles.container}>
-      <h1>Posts</h1>
-     
-        <div className="posts">
-          {posts && posts.map((post)=>(
-            
-            <PostCard key={post._id} post={post} />
-
-           
-          ))}
-            
-        </div>
+      <h1 className={styles.title}>Search Results for: {searchParams.get('term')}</h1>
+      {error && <p className="message">{error.error}</p>}
+      <div className={styles.container}>
+       {posts && posts.map((post)=>(
+       <PostCard key={post._id} post={post} />
+      ))}
+      </div>
 
     </div>
   )
